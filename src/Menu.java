@@ -40,9 +40,6 @@ public class Menu {
 
     // Functions
     public void update() {
-//        if (GamePanel.leftMouse) {
-//            GamePanel.state = GamePanel.STATES.PLAY;
-//        }
         if (GamePanel.mouseX > GamePanel.WIDTH / 2  - buttonWidth / 2 &&
                 GamePanel.mouseX < GamePanel.WIDTH / 2 + buttonWidth / 2 &&
                 GamePanel.mouseY > GamePanel.HEIGHT / 2 - buttonHeight / 2 &&
@@ -59,10 +56,10 @@ public class Menu {
 
     public void draw(Graphics2D g) {
 
-        // image background
+        // background image
         g.drawImage(img, 0, 0, GamePanel.WIDTH,GamePanel.HEIGHT + 100, null);
 
-        // flashing inscription under Play button
+        // flashing inscription under "Play" button
         double divider = waveDelay / 180;
         double alpha = waveTimerDiff / divider;
         alpha = 255 * Math.sin(Math.toRadians(alpha));
@@ -82,16 +79,18 @@ public class Menu {
         if (waveTimer == 0) {
             waveTimer = System.nanoTime();
         }
+        
         if (waveTimer > 0) {
             waveTimerDiff += (System.nanoTime() - waveTimer) / 1000000;
             waveTimer = System.nanoTime();
         }
+        
         if (waveTimerDiff > waveDelay) {
             waveTimer = 0;
             waveTimerDiff = 0;
         }
 
-        // Play button
+        // "Play" button
         g.setColor(color1);
         g.setStroke(new BasicStroke(5));
         g.drawRect(GamePanel.WIDTH / 2 - buttonWidth / 2,
