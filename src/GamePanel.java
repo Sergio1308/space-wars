@@ -48,11 +48,11 @@ public class GamePanel extends JPanel implements Runnable{
 
     // Constructor
     public GamePanel() {
-        super(); // constructor call JPanel
+        super();  // calling constructor of "JPanel" class
 
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setFocusable(true);
-        requestFocus(); // activate focus
+        requestFocus();  // activate focus
 
         addKeyListener(new Listeners());
         addMouseMotionListener(new Listeners());
