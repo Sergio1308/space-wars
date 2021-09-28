@@ -8,12 +8,16 @@ public class PowerUp {
 
     private int type;
     private Color color1;
-
-    // type #1 +1 life
-    // type #2 +1 power
-    // type # 3 +2 power
-
-    // Constructor
+    
+    /**
+     * Constructor
+     
+     * Bonuses for each type of powerup:
+     * #1 type: +1 life
+     * #2 type: +1 powerup
+     * #3 type: +2 powerup
+     */
+    
     public PowerUp(int type, double x, double y) {
         this.type = type;
         this.x = x;
@@ -34,7 +38,6 @@ public class PowerUp {
     }
 
     // Functions
-
     public double getX() { return x; }
     public double getY() { return y; }
     public double getR() { return r; }
