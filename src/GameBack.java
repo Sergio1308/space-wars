@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class GameBack {
+    
     // Fields
     private Color color;
 
@@ -28,7 +29,6 @@ public class GameBack {
         g.fillRect(0,0, GamePanel.WIDTH, GamePanel.HEIGHT);
 
         g.drawImage(img1, 0, 0, null);
-        //g.drawImage(img2, 0, 0, null);
     }
 }
 
