@@ -9,19 +9,18 @@ public class Listeners implements KeyListener, MouseListener, MouseMotionListene
         if (key == KeyEvent.VK_W) {
             Player.up = true;
         }
+        
         if (key == KeyEvent.VK_S) {
             Player.down = true;
         }
+        
         if (key == KeyEvent.VK_A) {
             Player.left = true;
         }
+        
         if (key == KeyEvent.VK_D) {
             Player.right = true;
         }
-
-//        if (key == KeyEvent.VK_SPACE) {
-//            Player.isFiring = true;
-//        }
 
         if (key == KeyEvent.VK_ESCAPE) {
             if (Player.healthy == false) {
@@ -44,18 +43,19 @@ public class Listeners implements KeyListener, MouseListener, MouseMotionListene
         if (key == KeyEvent.VK_W) {
             Player.up = false;
         }
+        
         if (key == KeyEvent.VK_S) {
             Player.down = false;
         }
+        
         if (key == KeyEvent.VK_A) {
             Player.left = false;
         }
+        
         if (key == KeyEvent.VK_D) {
             Player.right = false;
         }
-//        if (key == KeyEvent.VK_SPACE) {
-//            Player.isFiring = false;
-//        }
+        
         if (key == KeyEvent.VK_SPACE) {
                 if (Player.healthy == false) {
                     GamePanel.state = GamePanel.STATES.PLAY;
