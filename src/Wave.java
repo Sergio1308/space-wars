@@ -1,6 +1,7 @@
 import java.awt.*;
 
 public class Wave {
+    
     // Fields
     private int waveNumber;
     private int waveMultiplier;
@@ -48,7 +49,7 @@ public class Wave {
         }
         if (waveNumber > 3) {
             for (int i = 0; i < 10; i++) {
-                GamePanel.enemies.add(new Enemy(1,1));
+                GamePanel.enemies.add(new Enemy(1, 1));
             }
         }
         if (waveNumber == 10) {
@@ -56,26 +57,9 @@ public class Wave {
                 GamePanel.enemies.add(new Enemy(1, 1));
             }
         }
-//        int enemyCount = waveNumber * waveMultiplier;
-//        if (waveNumber < 4) {
-//            while (enemyCount > 0) {
-//                int type = 1;
-//                int rank = 1;
-//                GamePanel.enemies.add(new Enemy(type, rank));
-//                enemyCount -= type * rank;
-//            }
-//        }
-//        if (waveNumber > 4) {
-//            while (enemyCount > 0) {
-//                int type = 1;
-//                int rank = 3;
-//                GamePanel.enemies.add(new Enemy(type, rank));
-//                enemyCount -= type * rank;
-//            }
-//        }
-//        waveNumber++;
     }
-    public int getWaveNumber() { return waveNumber; }
+    
+    public int getWaveNumber() { return waveNumber; }  // getter
 
     public void update() {
         if (GamePanel.enemies.size() == 0 && waveTimer == 0) {
