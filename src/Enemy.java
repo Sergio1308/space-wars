@@ -10,7 +10,7 @@ public class Enemy {
     private int r;
 
     private double speed;
-    private double dx; // shift
+    private double dx; // bias
     private double dy;
     private double rad;
 
@@ -26,10 +26,6 @@ public class Enemy {
 
     Image img = new ImageIcon("image/enemyleft.png").getImage();
     Image img2 = new ImageIcon("image/enemyright.png").getImage();
-
-//    public Rectangle getRect() {
-//        return new Rectangle((int) x, (int) y, 728, 76);
-//    }
 
     // Constructor
     public Enemy(int type, int rank) {
@@ -52,62 +48,11 @@ public class Enemy {
                     dy = Math.cos(angle) * speed;
             }
         }
-
-//        // default enemy
-//        if (type == 1) {
-//            color = Color.GREEN;
-//            if (rank == 1) {
-//                speed = 2;
-//                r = 7;
-//                health = 1;
-//            }
-//        }
-//        // stronger, faster default
-//        if (type == 2) {
-//            color = Color.RED;
-//            if (rank == 1) {
-//                speed = 3;
-//                r = 7;
-//                health = 2;
-//            }
-//            if (rank == 2) {
-//                speed = 2;
-//                r = 12;
-//                health = 2;
-//            }
-//            if (rank == 3) {
-//                speed = 1.5;
-//                r = 22;
-//                health = 3;
-//            }
-//            if (rank == 4) {
-//                speed = 1.5;
-//                r = 32;
-//                health = 4;
-//            }
-//        }
-//        // slow, but hard to kill
-//        if (type == 3) {
-//            color = Color.YELLOW;
-//            if (rank == 1) {
-//                speed = 1.5;
-//                r = 7;
-//                health = 5;
-//            }
-//        }
-
-//        x = Math.random() * GamePanel.WIDTH;
-//        y = 0;
-//        double angle = Math.toRadians(Math.random() * 360);
-//        //dx = Math.sin(angle) * speed;
-//        dy = Math.cos(angle) * speed;
-//        dx = Math.sin(angle) * speed;
-
         ready = false;
     }
 
     // Functions
-    public double getX() { return x; }
+    public double getX() { return x; }  // getter
     public double getY() { return y; }
     public double getW() { return w; }
     public double getH() { return h; }
