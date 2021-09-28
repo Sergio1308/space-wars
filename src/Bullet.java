@@ -14,9 +14,6 @@ public class Bullet {
     private double dist;
     private int r;
 
-//    private double dx;
-//    private double dy;
-//    private double rad;
     private double speed;
 
     private Color color;
@@ -32,14 +29,14 @@ public class Bullet {
         r = 2;
         speed = 20;
 
-        distX = GamePanel.mouseX - x; // разница от прицела до пули
+        distX = GamePanel.mouseX - x; // subtracting the distance from the sight to the bullet
         distY = y - GamePanel.mouseY;
 
         color = Color.WHITE;
     }
 
     //  Functions
-    public double getX() { return x; }
+    public double getX() { return x; }  // getter
     public double getY() { return y; }
     public double getW() { return w; }
     public double getH() { return h; }
@@ -57,23 +54,22 @@ public class Bullet {
         y = y - speed * distY/(Math.sqrt(distX*distX + distY*distY));
         x = x + speed * distX/(Math.sqrt(distX*distX + distY*distY));
 
-
         if (x < -r || x > GamePanel.WIDTH + r ||
                 y < -r || y > GamePanel.HEIGHT + r) {
             return true;
-        } return false;
+        } 
+        return false;
     }
 
     public void draw(Graphics2D g) {
-//        g.setColor(color);
-//        g.fillOval((int) x, (int) y, r, 2 * r);
-        AffineTransform origXform; //создание объекта
-        origXform = g.getTransform(); //получаем текущее значение
-        AffineTransform newXform = (AffineTransform) (origXform.clone()); //клон текущего знач
-        if (distX > 0) newXform.rotate(Math.acos(distY/(Math.sqrt(distX*distX + distY*distY))), x, y); //поворот изображения
+        
+        AffineTransform origXform;
+        origXform = g.getTransform();  // get current value
+        AffineTransform newXform = (AffineTransform) (origXform.clone());  // clone current value
+        if (distX > 0) newXform.rotate(Math.acos(distY/(Math.sqrt(distX*distX + distY*distY))), x, y);  // image rotation
         if (distX < 0) newXform.rotate(-Math.acos(distY/(Math.sqrt(distX*distX + distY*distY))), x, y);
-        g.setTransform(newXform); //установка текущюю трансформацию
-        g.drawImage(img, (int)x, (int)y, null); // зарисовка
-        g.setTransform(origXform); //возвращение старого значения
+        g.setTransform(newXform);  // setting the current transformation
+        g.drawImage(img, (int)x, (int)y, null);  // filling
+        g.setTransform(origXform);  // return the old value
     }
 }
