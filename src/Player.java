@@ -4,13 +4,14 @@ import java.awt.geom.AffineTransform;
 
 
 public class Player {
+    
     // Fields
     private double x;
     private double y;
-    private double w; // ширина объекта
-    private double h; // высота
+    private double w;  // object width
+    private double h;  // object height
 
-    private double dx; // move coefficient
+    private double dx;  // bias coefficient
     private double dy;
 
     private int r = 5;
@@ -52,15 +53,15 @@ public class Player {
         return new Rectangle((int) x, (int) y, 58, 74);
     }
 
-    private double ang1; // угол поворота игрока
-    private double distX; // разница по х от курсора мышки
-    private double distY; //
-    private double dist; // расстояние от курсора мышки
+    private double ang1;  // player rotation angle
+    private double distX;  // subtracting the distance in x from the mouse cursor
+    private double distY;
+    private double dist;  // distance from mouse cursor
 
 
     // Constructor
     public Player () {
-        x = GamePanel.WIDTH / 2; // spawn
+        x = GamePanel.WIDTH / 2; // spawn position
         y = 500;
         w = 58;
         h = 74;
@@ -88,7 +89,7 @@ public class Player {
         score = 0;
     }
 
-    //Functions
+    // Functions
     public double getX(){
         return x;
     }
@@ -135,12 +136,12 @@ public class Player {
 
     public void update() {
 
-        distX = GamePanel.mouseX - x; // разница по х от курсора
+        distX = GamePanel.mouseX - x;  // subtracting the x distance from the mouse cursor
         distY = y - GamePanel.mouseY;
-        dist = (Math.sqrt(distX*distX + distY*distY)); // гипотенуза, от игрока до прицела
+        dist = (Math.sqrt(distX * distX + distY * distY));  // calculating the hypotenuse from player to crosshair
 
-        if (distX > 0) ang1 = Math.acos(distY/(Math.sqrt(distX*distX + distY*distY))); // прицел справа
-        if (distX < 0) ang1 =- Math.acos(distY/(Math.sqrt(distX*distX + distY*distY)));
+        if (distX > 0) ang1 = Math.acos(distY/(Math.sqrt(distX * distX + distY * distY)));  // crosshair on the right
+        if (distX < 0) ang1 =- Math.acos(distY/(Math.sqrt(distX * distX + distY * distY)));
 
         if (up && y > 20) {
             y -= speed;
@@ -162,7 +163,7 @@ public class Player {
         y += dy;
         x += dx;
 
-        dy = 0; // stop moving
+        dy = 0;  // stop moving
         dx = 0;
 
         // firing
@@ -200,19 +201,13 @@ public class Player {
     }
 
     public void draw(Graphics2D g) {
-//        g.setColor(color1);
-//        g.fillOval((int) (x - r), (int) (y - r), 2 * r, 2 * r);
-//        g.setStroke(new BasicStroke(3)); // line thickness
-//        g.setColor(color1.darker());
-//        g.drawOval((int) (x - r), (int) (y - r), 2 * r, 2 * r);
-//        g.setStroke(new BasicStroke(1)); // line thickness
-        AffineTransform origXform; //создание объекта
-        origXform = g.getTransform(); //получаем текущее значение
-        AffineTransform newXform = (AffineTransform) (origXform.clone()); //клон текущего знач
-        newXform.rotate(ang1, x + 29, y + 25); //поворот текущего изображ.
-        g.setTransform(newXform); //установка текущюю трансформацию
-        g.drawImage(img, (int)x, (int)y, null); // зарисовка
-        g.setTransform(origXform); //возвращение старого значения
+        AffineTransform origXform;  
+        origXform = g.getTransform();  // get current position
+        AffineTransform newXform = (AffineTransform) (origXform.clone());  // clone current position
+        newXform.rotate(ang1, x + 29, y + 25);  // rotate current image
+        g.setTransform(newXform);  // set received value
+        g.drawImage(img, (int)x, (int)y, null);  // filling
+        g.setTransform(origXform);  // return the previous value
 
         g.setColor(Color.WHITE);
         ((Graphics2D) g).drawString("Enemies: " + GamePanel.enemies.size(), GamePanel.WIDTH - 160, GamePanel.HEIGHT - 20);
