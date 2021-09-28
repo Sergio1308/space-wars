@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class GameOver {
+    
     // Fields
     private int buttonWidth;
     private int buttonHeight;
@@ -22,7 +23,6 @@ public class GameOver {
 
     private Image img1 = new ImageIcon("image/SpaceOver1.png").getImage();
     private Image img2 = new ImageIcon("image/SpaceOver2.png").getImage();
-    //private Image img3 = new ImageIcon("image/SpaceOver3.png").getImage();
 
     // Constructor
     public GameOver() {
@@ -40,18 +40,9 @@ public class GameOver {
 
         rnd = (int) (Math.random() * 2);
     }
+    
     public void update() {
-//        if (GamePanel.mouseX > GamePanel.WIDTH / 2  - buttonWidth / 2 &&
-//                GamePanel.mouseX < GamePanel.WIDTH / 2 + buttonWidth / 2 &&
-//                GamePanel.mouseY > GamePanel.HEIGHT / 2 - buttonHeight / 2 &&
-//                GamePanel.mouseY < GamePanel.HEIGHT / 2 + buttonHeight / 2) {
-//            transp = 60;
-//            if (GamePanel.leftMouse) {
-//                GamePanel.state = GamePanel.STATES.PLAY;
-//            }
-//        } else {
-//            transp = 0;
-//        }
+        
     }
 
     // Functions
@@ -59,22 +50,6 @@ public class GameOver {
 
         if (rnd == 0) g.drawImage(img1, 0, 0, null);
         if (rnd == 1) g.drawImage(img2, 0, 0, null);
-        //if (rnd == 2) g.drawImage(img3, 0, 0, null);
-
-//        // button
-//        g.setColor(Color.WHITE);
-//        g.setStroke(new BasicStroke(3));
-//        g.drawRect(GamePanel.WIDTH / 3 + buttonWidth / 2 - 10,
-//                GamePanel.HEIGHT / 2 + buttonHeight * 3, buttonWidth, buttonHeight);
-//        g.setColor(new Color(255, 255, 255, transp));
-//        g.fillRect(GamePanel.WIDTH / 3 + buttonWidth / 2 - 10,
-//                GamePanel.HEIGHT / 2 + buttonHeight * 3,buttonWidth, buttonHeight);
-//        g.setStroke(new BasicStroke(1));
-//        // text
-//        g.setColor(Color.WHITE);
-//        g.setFont(new Font("Consolas", Font.BOLD, 40));
-//        g.drawString(s2, (int)(GamePanel.WIDTH / 3 + buttonWidth / 2),
-//                (GamePanel.HEIGHT / 2 + buttonHeight * 4 - 15));
 
         // flashing inscription
         double divider = Delay / 180;
@@ -95,14 +70,15 @@ public class GameOver {
         if (Timer == 0) {
             Timer = System.nanoTime();
         }
+        
         if (Timer > 0) {
             TimerDiff += (System.nanoTime() - Timer) / 1000000;
             Timer = System.nanoTime();
         }
+        
         if (TimerDiff > Delay) {
             Timer = 0;
             TimerDiff = 0;
         }
     }
-
 }
