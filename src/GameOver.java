@@ -1,12 +1,8 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 public class GameOver {
-    
-    // Fields
+
     private int buttonWidth;
     private int buttonHeight;
     private Color color1;
@@ -24,7 +20,6 @@ public class GameOver {
     private Image img1 = new ImageIcon("image/SpaceOver1.png").getImage();
     private Image img2 = new ImageIcon("image/SpaceOver2.png").getImage();
 
-    // Constructor
     public GameOver() {
         buttonWidth = 170;
         buttonHeight = 60;
@@ -40,12 +35,9 @@ public class GameOver {
 
         rnd = (int) (Math.random() * 2);
     }
-    
-    public void update() {
-        
-    }
 
-    // Functions
+    public void update() { }
+
     public void draw(Graphics2D g) {
 
         if (rnd == 0) g.drawImage(img1, 0, 0, null);
@@ -59,6 +51,7 @@ public class GameOver {
         if (alpha < 0) alpha = 0;
         if (alpha > 255) alpha = 255;
 
+        // game over text
         long length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
         g.setFont(new Font("Broadway", Font.BOLD, 62));
         g.setColor(new Color(0, 0, 10, (int)alpha));
@@ -66,16 +59,19 @@ public class GameOver {
         g.setFont(new Font("Broadway", Font.BOLD, 60));
         g.setColor(new Color(255, 0, 0, (int)alpha));
         g.drawString(s, GamePanel.WIDTH / 2 - (int) (length / 2), GamePanel.HEIGHT / 2);
+        // your score text
+        g.setFont(new Font("Broadway", Font.BOLD, 45));
+        g.setColor(Color.WHITE);
+        g.drawString("Your Score: " + GamePanel.player.getScore(),
+                GamePanel.WIDTH / 2 - (int) (length / 2), GamePanel.HEIGHT - 50);
 
         if (Timer == 0) {
             Timer = System.nanoTime();
         }
-        
         if (Timer > 0) {
             TimerDiff += (System.nanoTime() - Timer) / 1000000;
             Timer = System.nanoTime();
         }
-        
         if (TimerDiff > Delay) {
             Timer = 0;
             TimerDiff = 0;

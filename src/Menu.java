@@ -1,14 +1,8 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
 
 public class Menu {
 
-    // Fields
     private int buttonWidth;
     private int buttonHeight;
 
@@ -23,7 +17,6 @@ public class Menu {
     private String waveText;
     private Image img = new ImageIcon("image\\SpaceMenu.jpg").getImage();
 
-    // Constructor
     public Menu() {
         buttonWidth = 120;
         buttonHeight = 60;
@@ -38,7 +31,6 @@ public class Menu {
 
     }
 
-    // Functions
     public void update() {
         if (GamePanel.mouseX > GamePanel.WIDTH / 2  - buttonWidth / 2 &&
                 GamePanel.mouseX < GamePanel.WIDTH / 2 + buttonWidth / 2 &&
@@ -53,14 +45,13 @@ public class Menu {
         }
     }
 
-
     public void draw(Graphics2D g) {
 
-        // background image
+        // image background
         g.drawImage(img, 0, 0, GamePanel.WIDTH,GamePanel.HEIGHT + 100, null);
 
-        // flashing inscription under "Play" button
-        double divider = waveDelay / 180;
+        // flashing inscription under Play button
+        double divider = (double) waveDelay / 180;
         double alpha = waveTimerDiff / divider;
         alpha = 255 * Math.sin(Math.toRadians(alpha));
 
@@ -79,18 +70,16 @@ public class Menu {
         if (waveTimer == 0) {
             waveTimer = System.nanoTime();
         }
-        
         if (waveTimer > 0) {
             waveTimerDiff += (System.nanoTime() - waveTimer) / 1000000;
             waveTimer = System.nanoTime();
         }
-        
         if (waveTimerDiff > waveDelay) {
             waveTimer = 0;
             waveTimerDiff = 0;
         }
 
-        // "Play" button
+        // Play button
         g.setColor(color1);
         g.setStroke(new BasicStroke(5));
         g.drawRect(GamePanel.WIDTH / 2 - buttonWidth / 2,

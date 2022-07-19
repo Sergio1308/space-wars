@@ -1,12 +1,8 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 public class GameBack {
-    
-    // Fields
+
     private Color color;
 
     private Image img1 = new ImageIcon("image/SpaceBack.png").getImage();
@@ -14,13 +10,10 @@ public class GameBack {
 
     public static Wave wave;
 
-    // Constructor
     public GameBack() {
         color = Color.BLUE;
     }
 
-
-    // Functions
     public void update() {
         wave = new Wave();
     }

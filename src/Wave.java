@@ -1,8 +1,7 @@
 import java.awt.*;
 
 public class Wave {
-    
-    // Fields
+
     private int waveNumber;
     private int waveMultiplier;
 
@@ -14,7 +13,6 @@ public class Wave {
 
     private String waveText;
 
-    // Constructor
     public Wave() {
         waveNumber = 0;
         waveMultiplier = 5;
@@ -27,39 +25,15 @@ public class Wave {
         waveText = " <<<  W A V E  ";
     }
 
-    // Functions
     public void createEnemies() {
         GamePanel.enemies.clear();
         Enemy e;
 
-        if (waveNumber == 1) {
-            for (int i = 0; i < 4; i++) {
-                GamePanel.enemies.add(new Enemy(1, 1));
-            }
-        }
-        if (waveNumber == 2) {
-            for (int i = 0; i < 6; i++) {
-                GamePanel.enemies.add(new Enemy(1, 1));
-            }
-        }
-        if (waveNumber == 3) {
-            for (int i = 0; i < 8; i++) {
-                GamePanel.enemies.add(new Enemy(1, 1));
-            }
-        }
-        if (waveNumber > 3) {
-            for (int i = 0; i < 10; i++) {
-                GamePanel.enemies.add(new Enemy(1, 1));
-            }
-        }
-        if (waveNumber == 10) {
-            for (int i = 0; i < 20; i++) {
-                GamePanel.enemies.add(new Enemy(1, 1));
-            }
+        for (int i = 0; i < waveNumber * 5; i++) {
+            GamePanel.enemies.add(new Enemy(1, 1));
         }
     }
-    
-    public int getWaveNumber() { return waveNumber; }  // getter
+    public int getWaveNumber() { return waveNumber; }
 
     public void update() {
         if (GamePanel.enemies.size() == 0 && waveTimer == 0) {
@@ -82,13 +56,11 @@ public class Wave {
     }
 
     public boolean showWave() {
-        if (waveTimer != 0) {
-            return true;
-        } else return false;
+        return waveTimer != 0;
     }
 
     public void draw(Graphics2D g) {
-        double divider = waveDelay / 180;
+        double divider = (float) waveDelay / 180;
         double alpha = waveTimerDiff / divider;
         alpha = 255 * Math.sin(Math.toRadians(alpha));
         if (alpha < 0) alpha = 0;

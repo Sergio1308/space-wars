@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Enemy {
-    // Fields
+
     private double x;
     private double y;
     private double h;
@@ -10,7 +10,7 @@ public class Enemy {
     private int r;
 
     private double speed;
-    private double dx; // bias
+    private double dx; // shift
     private double dy;
     private double rad;
 
@@ -27,32 +27,28 @@ public class Enemy {
     Image img = new ImageIcon("image/enemyleft.png").getImage();
     Image img2 = new ImageIcon("image/enemyright.png").getImage();
 
-    // Constructor
     public Enemy(int type, int rank) {
         this.type = type;
         this.rank = rank;
 
-        switch (type) {
-            case (1): color = Color.GREEN;
-            switch (rank) {
-                case (1):
-
-                    x = Math.random() * GamePanel.WIDTH;
-                    y = 20;
-                    w = 72;
-                    h = 76;
-                    speed = 2;
-                    health = 1;
-                    double angle = Math.toRadians(Math.random() * 360);
-                    dx = Math.sin(angle) * speed;
-                    dy = Math.cos(angle) * speed;
+        if (type == 1) {
+            color = Color.GREEN;
+            if (rank == 1) {
+                x = Math.random() * GamePanel.WIDTH;
+                y = 20;
+                w = 72;
+                h = 76;
+                speed = 2;
+                health = 1;
+                double angle = Math.toRadians(Math.random() * 360);
+                dx = Math.sin(angle) * speed;
+                dy = Math.cos(angle) * speed;
             }
         }
         ready = false;
     }
 
-    // Functions
-    public double getX() { return x; }  // getter
+    public double getX() { return x; }
     public double getY() { return y; }
     public double getW() { return w; }
     public double getH() { return h; }
@@ -62,10 +58,7 @@ public class Enemy {
     public int getRank() { return rank; }
 
     public boolean remove() {
-        if (health <= 0) {
-            return true;
-        }
-        return false;
+        return health <= 0;
     }
 
     public void hit() { health--; }
@@ -90,7 +83,6 @@ public class Enemy {
                 e.rad = Math.toRadians(angle);
 
                 GamePanel.enemies.add(e);
-
             }
         }
     }

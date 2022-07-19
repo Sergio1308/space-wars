@@ -2,16 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
-
 public class Player {
-    
-    // Fields
+
     private double x;
     private double y;
-    private double w;  // object width
-    private double h;  // object height
+    private double w;
+    private double h;
 
-    private double dx;  // bias coefficient
+    private double dx;
     private double dy;
 
     private int r = 5;
@@ -49,19 +47,12 @@ public class Player {
 
     Image img = new ImageIcon("image/player.png").getImage();
 
-    public Rectangle getRect() {
-        return new Rectangle((int) x, (int) y, 58, 74);
-    }
+    private double ang1; // angle player rotation
+    private double distX; // x-distance from mouse cursor
+    private double distY; // y-distance from mouse cursor
 
-    private double ang1;  // player rotation angle
-    private double distX;  // subtracting the distance in x from the mouse cursor
-    private double distY;
-    private double dist;  // distance from mouse cursor
-
-
-    // Constructor
     public Player () {
-        x = GamePanel.WIDTH / 2; // spawn position
+        x = (float) GamePanel.WIDTH / 2; // spawn
         y = 500;
         w = 58;
         h = 74;
@@ -89,7 +80,6 @@ public class Player {
         score = 0;
     }
 
-    // Functions
     public double getX(){
         return x;
     }
@@ -114,34 +104,34 @@ public class Player {
 
     public void hit() {
         health--;
-        healthy = true;
         if (health <= 0) {
+            healthy = true;
             GamePanel.state = GamePanel.STATES.GAMEOVER;
         }
+        powerLevel = 0;
+        power = 0;
     }
     public void addScore(int i) { score += i; }
 
     public void increasePower(int i) {
-        power += i;
-        if (power >= requiredPower[powerLevel]) {
-            power -= requiredPower[powerLevel];
-            powerLevel++;
-        }
+        if (power + i < requiredPower.length)
+            power += i;
+            if (power >= requiredPower[powerLevel]) {
+                power -= requiredPower[powerLevel];
+                powerLevel++;
+            }
     }
 
     public int getPowerLevel() { return powerLevel; }
     public int getPower() { return power; }
     public int getRequiredPower() { return requiredPower[powerLevel]; }
 
-
     public void update() {
-
-        distX = GamePanel.mouseX - x;  // subtracting the x distance from the mouse cursor
+        distX = GamePanel.mouseX - x;
         distY = y - GamePanel.mouseY;
-        dist = (Math.sqrt(distX * distX + distY * distY));  // calculating the hypotenuse from player to crosshair
 
-        if (distX > 0) ang1 = Math.acos(distY/(Math.sqrt(distX * distX + distY * distY)));  // crosshair on the right
-        if (distX < 0) ang1 =- Math.acos(distY/(Math.sqrt(distX * distX + distY * distY)));
+        if (distX > 0) ang1 = Math.acos(distY/(Math.sqrt(distX*distX + distY*distY)));
+        if (distX < 0) ang1 =- Math.acos(distY/(Math.sqrt(distX*distX + distY*distY)));
 
         if (up && y > 20) {
             y -= speed;
@@ -163,7 +153,7 @@ public class Player {
         y += dy;
         x += dx;
 
-        dy = 0;  // stop moving
+        dy = 0; // stop moving
         dx = 0;
 
         // firing
@@ -171,55 +161,58 @@ public class Player {
             long elapsed = (System.nanoTime() - firingTimer) / 1000000;
             if (elapsed > firingDelay) {
                 firingTimer = System.nanoTime();
-                if (powerLevel < 2) {
+                // extra firing
+                if (isShotgun) {
+                    isFiring = false;
+                    currentAngle = 360;
+                    int x1 = 500;
+                    while (x1 > -500) {
+                        GamePanel.bullets.add(new Bullet(currentAngle, x + x1, y));
+                        x1 -= 100;
+                    }
+                }
+                else if (powerLevel < 2) {
                     GamePanel.bullets.add(new Bullet(currentAngle, x, y));
                 }
                 else if (powerLevel < 4) {
-                    GamePanel.bullets.add(new Bullet(currentAngle, x + 5, y));
-                    GamePanel.bullets.add(new Bullet(currentAngle, x - 5, y));
-                }
-                else {
-                    GamePanel.bullets.add(new Bullet(currentAngle, x, y));
+                    currentAngle = 45;
                     GamePanel.bullets.add(new Bullet(currentAngle, x + 15, y));
                     GamePanel.bullets.add(new Bullet(currentAngle, x - 15, y));
                 }
+                else {
+                    currentAngle = 90;
+                    GamePanel.bullets.add(new Bullet(currentAngle, x, y));
+                    GamePanel.bullets.add(new Bullet(currentAngle, x + 55, y));
+                    GamePanel.bullets.add(new Bullet(currentAngle, x - 55, y));
+                }
                 isFiring = false;
-
-                if(isShotgun) {
-                    minAngle = -45;
-                    for (int i = 0; i < bulletsAmount; i++) {
-                        GamePanel.bullets.add(new Bullet(currentAngle, x, y));
-                        currentAngle += density;
-                    }
-                    currentAngle = minAngle;
-                }
-                else{
-                    GamePanel.bullets.add(new Bullet(0, x, y));
-                }
             }
         }
     }
 
     public void draw(Graphics2D g) {
-        AffineTransform origXform;  
-        origXform = g.getTransform();  // get current position
-        AffineTransform newXform = (AffineTransform) (origXform.clone());  // clone current position
-        newXform.rotate(ang1, x + 29, y + 25);  // rotate current image
-        g.setTransform(newXform);  // set received value
-        g.drawImage(img, (int)x, (int)y, null);  // filling
-        g.setTransform(origXform);  // return the previous value
+        AffineTransform origXform;
+        origXform = g.getTransform();
+        AffineTransform newXform = (AffineTransform) (origXform.clone());
+        newXform.rotate(ang1, x + 29, y + 25);
+        g.setTransform(newXform);
+        g.drawImage(img, (int)x, (int)y, null);
+        g.setTransform(origXform);
 
         g.setColor(Color.WHITE);
-        ((Graphics2D) g).drawString("Enemies: " + GamePanel.enemies.size(), GamePanel.WIDTH - 160, GamePanel.HEIGHT - 20);
+        ((Graphics2D) g).drawString("Enemies: " + GamePanel.enemies.size(),
+                GamePanel.WIDTH - 160, GamePanel.HEIGHT - 20);
     }
 
     public void drawHealth(Graphics2D g) {
         for (int i = 0; i < GamePanel.player.getHealth(); i++) {
             g.setColor(color1);
-            g.fillOval(15 + (25 * i), 20, GamePanel.player.getR() * 3, GamePanel.player.getR() * 3);
+            g.fillOval(15 + (25 * i), 20,
+                    GamePanel.player.getR() * 3, GamePanel.player.getR() * 3);
             g.setStroke(new BasicStroke(3));
             g.setColor(color1.darker());
-            g.fillOval(15 + (25 * i), 20, GamePanel.player.getR() * 3, GamePanel.player.getR() * 3);
+            g.fillOval(15 + (25 * i), 20,
+                    GamePanel.player.getR() * 3, GamePanel.player.getR() * 3);
             g.setStroke(new BasicStroke(1));
         }
     }

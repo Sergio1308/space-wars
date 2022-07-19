@@ -1,101 +1,83 @@
+import java.awt.*;
 import java.awt.event.*;
 
 public class Listeners implements KeyListener, MouseListener, MouseMotionListener {
-
-
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_W) {
             Player.up = true;
         }
-        
         if (key == KeyEvent.VK_S) {
             Player.down = true;
         }
-        
         if (key == KeyEvent.VK_A) {
             Player.left = true;
         }
-        
         if (key == KeyEvent.VK_D) {
             Player.right = true;
         }
-
-        if (key == KeyEvent.VK_ESCAPE) {
-            if (Player.healthy == false) {
+        if (key == KeyEvent.VK_ESCAPE && !Player.healthy) {
+            if (GamePanel.state.equals(GamePanel.STATES.PLAY)) {
                 GamePanel.state = GamePanel.STATES.MENU;
+            } else {
+                GamePanel.state = GamePanel.STATES.PLAY;
             }
         }
         if (key == KeyEvent.VK_Z) {
-            if (Player.isShotgun == false) {
-                Player.isShotgun = true;
-            } else {
-                Player.isShotgun = false;
-            }
+            Player.isShotgun = !Player.isShotgun;
         }
     }
 
     public void keyReleased(KeyEvent e) {
 
         int key = e.getKeyCode();
-
-        if (key == KeyEvent.VK_W) {
-            Player.up = false;
-        }
-        
-        if (key == KeyEvent.VK_S) {
-            Player.down = false;
-        }
-        
-        if (key == KeyEvent.VK_A) {
-            Player.left = false;
-        }
-        
-        if (key == KeyEvent.VK_D) {
-            Player.right = false;
-        }
-        
-        if (key == KeyEvent.VK_SPACE) {
-                if (Player.healthy == false) {
+        switch(key) {
+            case KeyEvent.VK_W:
+                Player.up = false;
+                break;
+            case KeyEvent.VK_S:
+                Player.down = false;
+                break;
+            case KeyEvent.VK_A:
+                Player.left = false;
+                break;
+            case KeyEvent.VK_D:
+                Player.right = false;
+                break;
+            case KeyEvent.VK_SPACE:
+                if (!Player.healthy) {
                     GamePanel.state = GamePanel.STATES.PLAY;
                     GamePanel.space = true;
                 }
+                break;
         }
     }
 
-    public void keyTyped(KeyEvent e) {
+    public void keyTyped(KeyEvent e) { }
 
-    }
-
-    public void mouseClicked(MouseEvent e) {
-
-    }
+    public void mouseClicked(MouseEvent e) { }
 
     public void mousePressed(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
             if (GamePanel.state.equals(GamePanel.STATES.PLAY))
-                GamePanel.player.isFiring = true;
+                Player.isFiring = true;
             GamePanel.leftMouse = true;
         }
     }
 
     public void mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
-            GamePanel.player.isFiring = false;
+            Player.isFiring = false;
             GamePanel.leftMouse = false;
         }
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
+    public void mouseEntered(MouseEvent e) { }
 
     @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
+    public void mouseExited(MouseEvent e) { }
 
     public void mouseDragged(MouseEvent e) {
         GamePanel.mouseX = e.getX();

@@ -1,26 +1,22 @@
 import java.awt.*;
 
 public class Explosion {
-    // Fields
+
     private double x;
     private double y;
     private int r;
     private int maxRadius;
 
-    // Constructor
     public Explosion(double x, double y, int r, int max) {
         this.x = x;
         this.y = y;
         this.r = r;
         maxRadius = max;
     }
-    // Functions
+
     public boolean update() {
         r += 2;
-        if (r >= maxRadius) {
-            return true;
-        }
-        return false;
+        return r >= maxRadius;
     }
     public void draw(Graphics2D g) {
         g.setColor(new Color(255, 0, 0, 128));
